@@ -29,10 +29,6 @@ def subscription_create(request, package_id):
         if Subscription.objects.filter(user=user, is_trial=True).exists() or (current_subscription and current_subscription.is_trial):
             return redirect('package')
 
-        if current_subscription:
-            current_subscription.is_active = False
-            current_subscription.save()
-
         trial_end = timezone.now() + timedelta(days=7)
         Subscription.objects.create(
             user=user,
